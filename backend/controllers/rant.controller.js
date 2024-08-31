@@ -25,7 +25,7 @@ export const createRant = asyncHandler(async (req, res) => {
 
 export const commentOnRant = asyncHandler(async (req, res) => {
     const { text } = req.body;
-    const { rantId } = req.params;
+    const { id: rantId } = req.params;
 
     if (!text)
         return res.status(400).json({ error: "Comment cannot be empty" });
@@ -44,10 +44,10 @@ export const commentOnRant = asyncHandler(async (req, res) => {
     res.status(200).json(rant);
 });
 
-export const getAllRants = asyncHandler(async (req, res) => {
+export const getAllRants = asyncHandler(async (_, res) => {
     const rants = await Rant.find().sort({ createdAt: -1 });
 
-    if (posts.length === 0) return res.status(200).json([]);
+    if (rants.length === 0) return res.status(200).json([]);
 
     res.status(200).json(rants);
 });

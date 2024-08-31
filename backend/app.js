@@ -17,6 +17,6 @@ app.use(express.static("public"));
 
 import rantRoutes from "./routes/rant.routes.js";
 
-app.use("api/v1/rant", rantRoutes);
+app.use("/api/v1/rant", rantRoutes);
 
 export { app };
