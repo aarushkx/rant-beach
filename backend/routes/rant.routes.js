@@ -7,7 +7,7 @@ import {
 
 const router = express.Router();
 
-router.get("/", getAllRants);
+router.get("/all", getAllRants);
 router.post("/create", createRant);
 router.post("/comment/:id", commentOnRant);
 
