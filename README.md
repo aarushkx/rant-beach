@@ -8,4 +8,4 @@ Rant Beach is a web application where users can anonymously post their rants. It
 
 ## View Project
 
-[View Live](http://localhost:3000)
+[View Live](https://rant-beach.onrender.com)
