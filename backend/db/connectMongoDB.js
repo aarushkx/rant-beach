@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const connectDB = async () => {
+const connectMongoDB = async () => {
     try {
         const connectionInstance = await mongoose.connect(
             `${process.env.MONGODB_URI}/rant-beach`
@@ -14,4 +14,4 @@ const connectDB = async () => {
     }
 };
 
-export default connectDB;
+export default connectMongoDB;
