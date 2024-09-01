@@ -12,6 +12,9 @@ export const createRant = asyncHandler(async (req, res) => {
             error: "Title cannot exceed 300 characters",
         });
 
+    if (!body || body.trim() === "")
+        return res.status(400).json({ error: "Body is required" });
+
     if (body.length > 3000)
         return res.status(400).json({
             error: "Body cannot exceed 3000 characters",

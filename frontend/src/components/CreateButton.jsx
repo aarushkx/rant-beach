@@ -1,8 +1,54 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import { RANT_API_ENDPOINT } from "../endpoints.js";
 
 function CreateButton() {
+    const [title, setTitle] = useState("");
+    const [body, setBody] = useState("");
+    const [error, setError] = useState("");
+    const [isVisible, setIsVisible] = useState(true);
+    const lastScrollTop = useRef(0);
+
+    const handleCreatePost = async () => {
+        try {
+            const response = await axios.post(`${RANT_API_ENDPOINT}/create`, {
+                title,
+                body,
+            });
+
+            if (response.status === 201) {
+                setTitle("");
+                setBody("");
+                document.getElementById("create-modal").close();
+            }
+        } catch (error) {
+            setError(
+                error.response?.data?.error ||
+                    "Failed to create rant. Please try again."
+            );
+            console.error("Error creating rant:", error);
+        }
+    };
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = window.scrollY;
+            if (scrollTop > lastScrollTop.current) setIsVisible(false);
+            else setIsVisible(true);
+
+            lastScrollTop.current = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     return (
-        <div className="fixed bottom-12 w-full flex justify-center">
+        <div
+            className={`fixed bottom-12 w-full flex justify-center transition-opacity duration-300 ${
+                isVisible ? "opacity-100" : "opacity-0"
+            }`}
+        >
             <button
                 onClick={() => {
                     document.getElementById("create-modal").showModal();
@@ -29,6 +75,8 @@ function CreateButton() {
                             </label>
 
                             <textarea
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
                                 placeholder="Write the title here"
                                 rows={1}
                                 className="textarea textarea-primary w-full"
@@ -42,19 +90,21 @@ function CreateButton() {
                             </label>
 
                             <textarea
+                                value={body}
+                                onChange={(e) => setBody(e.target.value)}
                                 placeholder="Write the body here"
                                 className="textarea textarea-primary w-full"
                             ></textarea>
                         </div>
+
+                        {error && (
+                            <p className="text-red-500 text-center">{error}</p>
+                        )}
+
                         <div className="flex justify-center mt-4">
                             <button
                                 type="button"
-                                onClick={() => {
-                                    // TODO: Handle creation logic here
-                                    document
-                                        .getElementById("create-modal")
-                                        .close();
-                                }}
+                                onClick={handleCreatePost}
                                 className="btn btn-primary"
                             >
                                 Create
@@ -69,8 +119,7 @@ function CreateButton() {
                         onClick={() =>
                             document.getElementById("create-modal").close()
                         }
-                    >
-                    </button>
+                    ></button>
                 </form>
             </dialog>
         </div>
