@@ -4,7 +4,7 @@ Rant Beach is a web application where users can anonymously post their rants. It
 
 ## Preview
 
-<img src="/preview/preview.png" width="200">
+<img src="/preview/image_1.png" width="200"> <img src="/preview/image_2.png" width="200">
 
 ## View Project
 
