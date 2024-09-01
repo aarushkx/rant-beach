@@ -1,1 +1,1 @@
-export const RANT_API_ENDPOINT = "http://localhost:5000/api/v1/rant";
+export const RANT_API_ENDPOINT = "https://rant-beach.onrender.com/api/v1/rant";
