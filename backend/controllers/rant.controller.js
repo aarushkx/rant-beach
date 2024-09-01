@@ -23,27 +23,6 @@ export const createRant = asyncHandler(async (req, res) => {
     res.status(201).json(rant);
 });
 
-export const commentOnRant = asyncHandler(async (req, res) => {
-    const { text } = req.body;
-    const { id: rantId } = req.params;
-
-    if (!text)
-        return res.status(400).json({ error: "Comment cannot be empty" });
-
-    const rant = await Rant.findById(rantId);
-
-    if (!rant) return res.status(404).json({ error: "Rant not found" });
-
-    const comment = {
-        text,
-    };
-
-    rant.comments.push(comment);
-    await rant.save();
-
-    res.status(200).json(rant);
-});
-
 export const getAllRants = asyncHandler(async (_, res) => {
     const rants = await Rant.find().sort({ createdAt: -1 });
 

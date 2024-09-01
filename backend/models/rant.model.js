@@ -10,18 +10,6 @@ const rantSchema = new Schema(
             type: String,
             required: true,
         },
-        comments: [
-            {
-                text: {
-                    type: String,
-                    required: true,
-                },
-                createdAt: {
-                    type: Date,
-                    default: Date.now,
-                },
-            },
-        ],
     },
     { timestamps: true }
 );
